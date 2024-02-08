@@ -119,13 +119,21 @@ const MoviesHome = () => {
     const tmdbApiKey = '82fabe812ffe723bcb0ebe47b122a0eb';
 
     const mood = {
-        'Surprise': [14, 9648, 878],
-        'Sad': [18],
+        'Surprise': [28, 14, 9648, 878],
+        'Sad': [18, 16],
         'Neutral': [18, 35, 878],
         'Happy': [12, 35, 10751],
         'Fear': [53, 9648],
-        'Disgust': [27],
-        'Angry': [28]
+        'Disgust': [80],
+        'Angry': [27]
+    };
+
+    const genre_desc = {
+        28: 'Action', 12: 'Adventure', 16: 'Animation',
+        35: 'Comedy', 80: 'Crime', 18: 'Drama',
+        10751: 'Family', 14: 'Fantasy', 27: 'Horror',
+        10749: 'Romance', 878: 'Science Fiction', 53: 'Thriller',
+        9648: 'Mystery'
     };
 
     const openMovieDetailsModal = (movie) => {
@@ -189,7 +197,6 @@ const MoviesHome = () => {
                 console.error("Error fetching recently released books:", error.message);
             }
         };
-        
         fetchRecentlyReleasedMovies();
     }, []);
 
@@ -227,7 +234,7 @@ const MoviesHome = () => {
                 {searchTerm && <MovieList movies={movies} openMovieDetailsModal={openMovieDetailsModal} screen={'Search'} />}
                 
                 {emotionmovie && Object.keys(emotionmovie).map((emo) => (
-                    <MovieList movies={emotionmovie[emo]} openMovieDetailsModal={openMovieDetailsModal} screen={emo} />  
+                    <MovieList movies={emotionmovie[emo]} openMovieDetailsModal={openMovieDetailsModal} screen={genre_desc[emo]} />  
                 ))}
 
                 {selectMovie &&

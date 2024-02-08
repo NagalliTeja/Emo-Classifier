@@ -5,20 +5,10 @@ import Login from "./pages/Login";
 import BooksHome from "./pages/Books/BooksHome";
 import MoviesHome from "./pages/Movies/MoviesHome";
 import MusicHome from "./pages/Music/MusicHome";
-
-const Home = () => {
-  	return (
-	  	<>
-		  	<Navbar/>
-			<section className="hero-section">
-				<h1>Home Page</h1>
-			</section>
-		</>
-	);
-};
+import Home from "./pages/Home/Home";
 
 function App() {
-  const user = localStorage.getItem('token');
+	const user = localStorage.getItem('token');
 
 	return (
 		<>
@@ -29,9 +19,9 @@ function App() {
 				{user && <Route path="/music" exact element={<MusicHome />} />}
 				{user && <Route path="/movies" exact element={<MoviesHome />} />}
 				{user && <Route path="/books" exact element={<BooksHome />} />}
-				{/* <Route path="/" element={<Navigate replace to="/login" />} /> */}
+				<Route path="/" element={<Navigate replace to="/" />} />
 			</Routes>
-		</>	
+		</>
 	);
 }
 
