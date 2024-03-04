@@ -15,15 +15,6 @@ const truncateTitle = (title, maxLength) => {
 };
 
 const MovieDetailsModal = ({ isOpen, closeModal, movieDetails }) => {
-    const redirectToPurchase = () => {
-        const purchaseLink = movieDetails.saleInfo.buyLink;
-        window.open(purchaseLink, '_blank');
-    };
-
-    const redirectToRead = () => {
-        const readLink = movieDetails.volumeInfo.previewLink;
-        window.open(readLink, '_blank');
-    };
 
     return (
         <Modal
@@ -62,14 +53,6 @@ const MovieDetailsModal = ({ isOpen, closeModal, movieDetails }) => {
                 </p>
                 <br></br><br></br>
                 <p className="description">{truncateTitle(movieDetails.overview, 500)}</p>
-                {/* <div className="buttons-container">
-                    <button className="order-button" onClick={redirectToPurchase}>
-                    <MdShoppingCart /> Purchase
-                    </button>
-                    <button className="read-button" onClick={redirectToRead}>
-                    <MdBook /> Read Now
-                    </button>
-                </div> */}
                 </div>
             </div>
             </>

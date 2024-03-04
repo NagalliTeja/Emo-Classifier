@@ -1,4 +1,4 @@
-.app {
+/* .app {
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -33,5 +33,53 @@
 
 .app__upload input {
     display: none;
-    /* Hide the actual file input */
+} */
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.center-component {
+    text-align: center;
+}
+
+.center-component h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.center-component form {
+    margin-bottom: 20px;
+}
+
+.center-component input[type="file"] {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.center-component button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.center-component button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.prediction-alert {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
 }
