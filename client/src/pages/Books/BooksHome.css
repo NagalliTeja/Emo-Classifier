@@ -9,9 +9,7 @@ body {
 }
 
 .page-container {
-    margin-top: 200px;
     width: 100%;
-    margin: auto;
     padding: 20px;
 }
 
@@ -45,8 +43,6 @@ body {
     border-radius: 4px;
     margin-right: 10px;
 }
-
-
 
 .book-list{
     margin-top: 15px;
@@ -118,7 +114,6 @@ body {
     padding: 10px 10px 10px;
     box-shadow: 10px 10px 5px lightblue;
     transition: transform .5s ease-in-out;
-    margin-top: 10px;
     transform: scale(0.95);
 }
 
@@ -192,6 +187,7 @@ body {
 h1 {
     font-family: 'Playfair Display', sans-serif;
     text-shadow: 0 0 5px pink;
+    font-size: x-large;
 }
 
 .authors {

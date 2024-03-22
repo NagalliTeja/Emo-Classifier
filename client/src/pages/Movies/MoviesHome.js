@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import myImage from '../../components/no-image-available.jpg';
 import { FiSearch } from "react-icons/fi";
 import Modal from 'react-modal';
-import { MdClose, MdShoppingCart, MdBook } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 
 const truncateTitle = (title, maxLength) => {
@@ -15,48 +15,39 @@ const truncateTitle = (title, maxLength) => {
 };
 
 const MovieDetailsModal = ({ isOpen, closeModal, movieDetails }) => {
-
     return (
         <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Movie Details"
-        className="book-details-modal"
-        // overlayClassName="modal-overlay"
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            contentLabel="Movie Details"
+            className="book-details-modal"
         >
-        {movieDetails && (
-            <>
-            <div className="modal-header">
-                <h1>{movieDetails.title}</h1>                
-                <button onClick={closeModal} className="close-button">
-                <MdClose />
-                </button>
-            </div>
-            <div className="modal-content">
-                <div className="modal-left">
-                <img
-                src={movieDetails.poster_path? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`: myImage}
-                alt={movieDetails.title}
-                className="book-cover"
-                />
-                <div className="rating">
-                    <>
-                        <span>{movieDetails.popularity}</span>
-                        <span role="img" aria-label="star">⭐</span>
-                    </>
-                </div>
-                </div>
-                <div className="modal-right">
-                <p className="authors">
-                    Language: {movieDetails.original_language} <br></br><br></br>
-                    Release Date: { movieDetails.release_date }            
-                </p>
-                <br></br><br></br>
-                <p className="description">{truncateTitle(movieDetails.overview, 500)}</p>
-                </div>
-            </div>
-            </>
-        )}
+            {movieDetails && (
+                <>
+                    <div className="modal-header">
+                        <h1>{movieDetails.title}</h1>                
+                        <button onClick={closeModal} className="close-button"><MdClose /></button>
+                    </div>
+                    <div className="modal-content">
+                        <div className="modal-left">
+                            <img src={movieDetails.poster_path? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`: myImage}
+                            alt={movieDetails.title} className="book-cover" />
+                        </div>
+                        <div className="modal-right">
+                            <p className="authors">
+                                Language: {movieDetails.original_language} <br></br><br></br>
+                                Release Date: { movieDetails.release_date }            
+                                {movieDetails.popularity && <div className="rating">
+                                    <span>{movieDetails.popularity}</span>
+                                    <span role="img" aria-label="star">⭐</span>
+                                </div>}
+                            </p>
+                            <br></br><br></br>
+                            <p className="description">{truncateTitle(movieDetails.overview, 500)}</p>
+                        </div>
+                    </div>
+                </>
+            )}
         </Modal>
     );
 };
@@ -78,11 +69,8 @@ const MovieList = ({ movies, openMovieDetailsModal, screen }) => {
                 <div className="horizontal-scroll-list">
                     {movies.map((movie) => (
                         <div key={movie.id} className="horizontal-book-item" onClick={() => openMovieDetailsModal(movie)}>
-                            <img
-                                src={movie.poster_path? `https://image.tmdb.org/t/p/w500${movie.poster_path}`: myImage}
-                                alt={movie.title}
-                                className="book-image"
-                            />
+                            <img src={movie.poster_path? `https://image.tmdb.org/t/p/w500${movie.poster_path}`: myImage}
+                            alt={movie.title} className="book-image" />
                             <p className="book-title">{truncateTitle(movie.title, 20)}</p>
                         </div>
                     ))}

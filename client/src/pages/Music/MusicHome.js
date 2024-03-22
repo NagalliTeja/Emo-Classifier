@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import myImage from '../../components/no-image-available.jpg';
 import { FiSearch } from "react-icons/fi";
 import Modal from 'react-modal';
-import { MdClose, MdShoppingCart, MdBook } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 
 const truncateTitle = (title, maxLength) => {
@@ -22,50 +22,42 @@ const MusicDetailsModal = ({ isOpen, closeModal, musicDetails }) => {
 
     return (
         <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Book Details"
-        className="book-details-modal"
-        // overlayClassName="modal-overlay"
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            contentLabel="Book Details"
+            className="book-details-modal"
         >
-        {musicDetails && (
-            <>
-            <div className="modal-header">
-                <h1>{musicDetails.name}</h1>
-                <button onClick={closeModal} className="close-button">
-                <MdClose />
-                </button>
-            </div>
-            <div className="modal-content">
-                <div className="modal-left">
-                <img
-                    src={musicDetails.album.images.length > 0 ? musicDetails.album.images[0].url :myImage}
-                    alt={musicDetails.name}
-                    className="book-cover"
-                />
-                <div className="rating">
-                    <>
-                        <span>{musicDetails.popularity}</span>
-                        <span role="img" aria-label="star">⭐</span>
-                    </>
-                </div>
-                </div>
-                <div className="modal-right">
-                <p className="authors">
-                    Artists: {musicDetails.artists.map(artist => artist.name).join(", ")} <br /><br />
-                    Release Date: {musicDetails.album.release_date}
-                </p>
-                <br /><br />
-                <p className="description">{truncateTitle(musicDetails.album.name, 500)}</p>
-                <div className="buttons-container">
-                    <button className="order-button" onClick={redirectToListen}>
-                        Listen Now
-                    </button>
-                </div>            
-                </div>
-            </div>
-            </>
-        )}
+            {musicDetails && (
+                <>
+                    <div className="modal-header">
+                        <h1>{musicDetails.name}</h1>
+                        <button onClick={closeModal} className="close-button"><MdClose /></button>
+                    </div>
+                    <div className="modal-content">
+                        <div className="modal-left">
+                            <img src={musicDetails.album.images.length > 0 ? musicDetails.album.images[0].url :myImage}
+                            alt={musicDetails.name} className="book-cover" />
+                        </div>
+                        <div className="modal-right">
+                            <p className="authors">
+                                Artists: {musicDetails.artists.map(artist => artist.name).join(", ")} <br /><br />
+                                Release Date: {musicDetails.album.release_date}
+                                {musicDetails.popularity &&
+                                    <div className="rating">
+                                        <span>{musicDetails.popularity}</span>
+                                        <span role="img" aria-label="star">⭐</span>
+                                    </div>
+                                }
+                            </p>
+                            <br /><br />
+                            <p className="description">{truncateTitle(musicDetails.album.name, 500)}</p>
+                            <div className="buttons-container">
+                                <button className="order-button" onClick={redirectToListen}>Listen Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </Modal>
     );
 };
@@ -86,7 +78,7 @@ const MusicList = ({ music, openMusicDetailsModal, screen }) => {
             {isMusicListVisible && (
                 <div className="horizontal-scroll-list">
                     {music.map((song) => (
-                        <div key={song.id} className="horizontal-book-item" onClick={() => openMusicDetailsModal(song)}>
+                        <div key={song.id} className="horizontal-book-item" onClick={() => openMusicDetailsModal(song) }>
                             {song.images && <img
                                 src={song.images.length > 0 ? song.images[0].url : myImage}
                                 alt={song.name}
@@ -113,9 +105,6 @@ const MusicHome = () => {
     const [emotionmusic, setEmotionMusic] = useState({});
     const [selectedSong, setSelectedMusic] = useState(null);
     const [emotion, setEmotion] = useState("");
-
-    const clientID = '724eb4e40da44e8bbed263492728e9a2';
-    const clientSecret = '8c88037c561c4f62b8533de1789ca069';
     const [spotifyAccessToken, setSpotifyAccessToken] = useState(null);
 
     const mood = {
@@ -159,7 +148,7 @@ const MusicHome = () => {
                     a[i] = data.tracks.items;
                 }
             } catch (error) {
-                console.error("Error fetching books:", error.message);
+                console.error("Error fetching songs:", error.message);
             }
         }
         setEmotionMusic(a);
@@ -187,7 +176,7 @@ const MusicHome = () => {
                 throw new Error("Network response was not ok");
             }
         } catch (error) {
-            console.error("Error fetching books:", error.message);
+            console.error("Error fetching songs:", error.message);
         }
     };
 
@@ -226,12 +215,17 @@ const MusicHome = () => {
             }
 
             const data = await response.json();
+
             setRecentMusic(data.albums.items.map(album => ({
                 id: album.id,
                 name: album.name,
                 album: {
-                    images: album.images || [myImage]
-                }
+                    images: album.images || [myImage],
+                    release_date: album.release_date,
+                    name: album.name
+                },
+                artists: album.artists,
+                external_urls: album.external_urls
             })) || []);
         } catch (error) {
             console.error("Error fetching recently released music:", error.message);

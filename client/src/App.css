@@ -169,7 +169,7 @@ li {
     .mobile-menu-link {
         grid-column: 2/4;
         position: relative;
-        z-index: 99;
+        z-index: 100;
     }
 
     .mobile-menu-link {

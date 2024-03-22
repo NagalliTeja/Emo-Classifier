@@ -27,51 +27,39 @@ const BookDetailsModal = ({ isOpen, closeModal, bookDetails }) => {
 
     return (
         <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Book Details"
-        className="book-details-modal"
-        // overlayClassName="modal-overlay"
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            contentLabel="Book Details"
+            className="book-details-modal"
         >
-        {bookDetails && (
-            <>
-            <div className="modal-header">
-                <h1>{bookDetails.volumeInfo.title}</h1>
-                <button onClick={closeModal} className="close-button">
-                <MdClose />
-                </button>
-            </div>
-            <div className="modal-content">
-                <div className="modal-left">
-                <img
-                src={bookDetails.volumeInfo.imageLinks ? bookDetails.volumeInfo.imageLinks.thumbnail : myImage}
-                alt={bookDetails.volumeInfo.title}
-                className="book-cover"
-                />
-                <div className="rating">
-                    <>
-                        <span>{bookDetails.volumeInfo.averageRating}</span>
-                        <span role="img" aria-label="star">⭐</span>
-                    </>
-                </div>
-                </div>
-                <div className="modal-right">
-                <p className="authors">
-                    Authors: {bookDetails.volumeInfo.authors.join(', ')}
-                </p>
-                <p className="description">{truncateTitle(bookDetails.volumeInfo.description, 500)}</p>
-                <div className="buttons-container">
-                    <button className="order-button" onClick={redirectToPurchase}>
-                    <MdShoppingCart /> Purchase
-                    </button>
-                    <button className="read-button" onClick={redirectToRead}>
-                    <MdBook /> Read Now
-                    </button>
-                </div>            
-                </div>
-            </div>
-            </>
-        )}
+            {bookDetails && (
+                <>
+                    <div className="modal-header">
+                        <h1>{bookDetails.volumeInfo.title}</h1>
+                        <button onClick={closeModal} className="close-button">
+                            <MdClose />
+                        </button>
+                    </div>
+                    <div className="modal-content">
+                        <div className="modal-left">
+                            <img src={bookDetails.volumeInfo.imageLinks ? bookDetails.volumeInfo.imageLinks.thumbnail : myImage}
+                            alt={bookDetails.volumeInfo.title} className="book-cover"/>
+                        </div>
+                        <div className="modal-right">
+                            <p className="authors">Authors: {bookDetails.volumeInfo.authors.join(', ')}</p>
+                            {bookDetails.volumeInfo.averageRating && <div className="rating">
+                                <span>{bookDetails.volumeInfo.averageRating}</span>
+                                <span role="img" aria-label="star">⭐</span>
+                            </div>}
+                            <p className="description">{truncateTitle(bookDetails.volumeInfo.description, 500)}</p>
+                            <div className="buttons-container">
+                                <button className="order-button" onClick={redirectToPurchase}><MdShoppingCart /> Purchase</button>
+                                <button className="read-button" onClick={redirectToRead}><MdBook /> Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </Modal>
     );
 };
@@ -87,7 +75,9 @@ const BookList = ({ books, openBookDetailsModal, screen }) => {
         <div className="book_list">
             <div className="list-header">
                 <h1>{screen} Books</h1>
-                <button className="toggle-button" onClick={toggleBookList}>{ isBookListVisible? <IoIosArrowDropupCircle/>: <IoIosArrowDropdownCircle/>}</button>
+                <button className="toggle-button" onClick={toggleBookList}>
+                    {isBookListVisible ? <IoIosArrowDropupCircle /> : <IoIosArrowDropdownCircle />}
+                </button>
             </div>
             {isBookListVisible && (
                 <div className="horizontal-scroll-list">
@@ -124,6 +114,7 @@ const BooksHome = () => {
         'Disgust': ['Crime', 'True Crime', 'Dark Themes'],
         'Angry': ['Social Justice', 'Political']
     };
+
     const openBookDetailsModal = (book) => {
         setSelectedBook(book);
     };
@@ -137,10 +128,7 @@ const BooksHome = () => {
         let a = {};
         for (let i of mood[emotion]) {
             try {
-                const response = await fetch(
-                    `https://www.googleapis.com/books/v1/volumes?q=subject=${i}`
-                );
-
+                const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject=${i}`);
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -155,9 +143,7 @@ const BooksHome = () => {
 
     const handleSearch = async () => {
         try {
-            const response = await fetch(
-                `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
-            );
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`);
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -225,9 +211,7 @@ const BooksHome = () => {
                     <BookList books={emotionbook[emo]} openBookDetailsModal={openBookDetailsModal} screen={emo} />  
                 ))}
 
-                {selectedBook &&
-                    <BookDetailsModal isOpen={!!selectedBook} closeModal={closeBookDetailsModal} bookDetails={selectedBook}/>
-                }
+                {selectedBook && <BookDetailsModal isOpen={!!selectedBook} closeModal={closeBookDetailsModal} bookDetails={selectedBook}/>}
 
                 {<BookList books={recentbooks} openBookDetailsModal={openBookDetailsModal} screen={"Recent Released"} />}
             </div>
@@ -235,4 +219,4 @@ const BooksHome = () => {
     );
 };
 
-export default BooksHome;
+export { BooksHome, BookList, BookDetailsModal };
