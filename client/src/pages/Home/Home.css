@@ -12,3 +12,57 @@
     align-items: center;
     margin-top: 10px;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgb(98, 211, 143), #00fffc);
+    height: 30vh;
+}
+
+.left-partition {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-partition {
+    flex: 1;
+    padding: 20px;
+    align-items: center;
+}
+
+.image-preview {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.image-preview img {
+    width: 25vh;
+    height: 25vh;
+    object-fit: cover;
+}
+
+.button-container {
+    margin-bottom: 10px;
+}
+
+.camerabutoon{
+    font-size: 40px;
+}
+
+.uploadbutton{
+    margin-top: 15px;
+    padding: 5px;
+    background-color: #167ac2;
+    color: white;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.inputtag{
+    margin-left: 40px;
+}

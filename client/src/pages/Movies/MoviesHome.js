@@ -128,9 +128,9 @@ const MoviesHome = () => {
                     throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
-                a["genre"+i] = data.results;
+                a[i] = data.results;
             } catch (error) {
-                console.error("Error fetching books:", error.message);
+                console.error("Error fetching movies:", error.message);
             }
         }
         setEmotionMovie(a);
@@ -218,4 +218,4 @@ const MoviesHome = () => {
     );
 };
 
-export default MoviesHome;
+export { MoviesHome, MovieList, MovieDetailsModal };

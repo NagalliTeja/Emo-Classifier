@@ -287,4 +287,4 @@ const MusicHome = () => {
     );
 };
 
-export default MusicHome;
+export { MusicHome, MusicList, MusicDetailsModal };

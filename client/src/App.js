@@ -2,8 +2,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { BooksHome } from "./pages/Books/BooksHome";
-import MoviesHome from "./pages/Movies/MoviesHome";
-import MusicHome from "./pages/Music/MusicHome";
+import { MoviesHome } from "./pages/Movies/MoviesHome";
+import { MusicHome } from "./pages/Music/MusicHome";
 import Home from "./pages/Home/Home";
 
 function App() {
