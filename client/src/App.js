@@ -17,7 +17,7 @@ function App() {
 				{user && <Route path="/music" exact element={<MusicHome />} />}
 				{user && <Route path="/movies" exact element={<MoviesHome />} />}
 				{user && <Route path="/books" exact element={<BooksHome />} />}
-				<Route path="/" element={<Navigate replace to="/" />} />
+				<Route path="/" element={<Navigate replace to="/login" />} />
 			</Routes>
 		</>
 	);

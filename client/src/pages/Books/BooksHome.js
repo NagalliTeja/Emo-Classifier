@@ -155,22 +155,23 @@ const BooksHome = () => {
             console.error("Error fetching books:", error.message);
         }
     };
+    
+    const fetchRecentlyReleasedBooks = async () => {
+        try {
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:fiction&orderBy=newest`);
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const data = await response.json();
+            setRecentBooks(data.items || []);
+        } catch (error) {
+            console.error("Error fetching recently released books:", error.message);
+        }
+    };
 
     useEffect(() => {
-        const fetchRecentlyReleasedBooks = async () => {
-            try {
-                const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:fiction&orderBy=newest`);
-
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-
-                const data = await response.json();
-                setRecentBooks(data.items || []);
-            } catch (error) {
-                console.error("Error fetching recently released books:", error.message);
-            }
-        };
         fetchRecentlyReleasedBooks();
     }, []);
 
